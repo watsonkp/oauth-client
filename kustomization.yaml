@@ -1,0 +1,35 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- deployment.yaml
+configMapGenerator:
+- name: varnish-default
+  files:
+  - default.vcl
+- name: varnish-destination
+  files:
+  - destination.vcl
+- name: varnish-verbose
+  files:
+  - verbose_builtin.vcl
+- name: varnish-hit-miss
+  files:
+  - hit-miss.vcl
+- name: haproxy
+  files:
+  - haproxy.cfg
+- name: proxy-destination
+  literals:
+  - for-host=change-me.proxy-host.example.com
+- name: cors
+  literals:
+  - allow-origin=https://change-me.api-client.example.com
+secretGenerator:
+- name: client-authorization
+  literals:
+  - access-token=Bearer CHANGEME
+patches:
+- target:
+    kind: Deployment
+    name: varnish
+  path: set_registry.yaml

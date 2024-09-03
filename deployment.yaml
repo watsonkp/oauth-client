@@ -1,0 +1,89 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: oauth-client
+  name: varnish
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: oauth-client
+  template:
+    metadata:
+      labels:
+        app: oauth-client
+    spec:
+      containers:
+        - name: varnish
+          image: registry.svc.cluster.local/_/varnish:7.5-alpine
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: 'VARNISH_HTTP_PORT'
+              value: '6081'
+            - name: 'PROXY_FOR_HOST'
+              valueFrom:
+                configMapKeyRef:
+                  name: proxy-destination
+                  key: for-host
+            - name: 'AUTHORIZATION'
+              valueFrom:
+                secretKeyRef:
+                  name: client-authorization
+                  key: access-token
+            - name: 'ALLOW_ORIGIN'
+              valueFrom:
+                configMapKeyRef:
+                  name: cors
+                  key: allow-origin
+          ports:
+            - containerPort: 6081
+              name: varnish-http
+              protocol: TCP
+          volumeMounts:
+          - name: varnish-config
+            mountPath: "/etc/varnish"
+            readOnly: false
+        - name: haproxy
+          image: registry.svc.cluster.local/_/haproxy:3.0-alpine
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+              name: haproxy-http
+              protocol: TCP
+          volumeMounts:
+          - name: haproxy-config
+            mountPath: "/usr/local/etc/haproxy"
+            readOnly: true
+      volumes:
+        - name: varnish-config
+          projected:
+            sources:
+            - configMap:
+                name: varnish-default
+                items:
+                - key: "default.vcl"
+                  path: "default.vcl"
+            - configMap:
+                name: varnish-destination
+                items:
+                - key: "destination.vcl"
+                  path: "destination.vcl"
+            - configMap:
+                name: varnish-hit-miss
+                items:
+                - key: "hit-miss.vcl"
+                  path: "hit-miss.vcl"
+            - configMap:
+                name: varnish-verbose
+                items:
+                - key: "verbose_builtin.vcl"
+                  path: "verbose_builtin.vcl"
+        - name: haproxy-config
+          projected:
+            sources:
+            - configMap:
+                name: haproxy
+                items:
+                - key: "haproxy.cfg"
+                  path: "haproxy.cfg"
