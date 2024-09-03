@@ -14,7 +14,13 @@ The Varnish cache injects the OAuth client access token when a user access token
 
 Inbound TLS is handled by the Kubernetes ingress.
 
-## Configuration
+## Build
+	cd app
+	docker load <$(nix-build)
+	docker tag sulliedsecurity/oauthclient:testing change-me.registry.example.com/sulliedsecurity/oauthclient:testing
+	docker push change-me.registry.example.com/sulliedsecurity/oauthclient:testing
+
+## Configure
 1. Change the `.host` property in `destination.vcl` to the domain name of the API server.
 2. Change the `server` property in `haproxy.cfg` to the API server.
 3. In the `kustomization.yaml` file change the `for-host` value of the `proxy-destination` configuration to the host header value in requests that should be sent to the API server.
