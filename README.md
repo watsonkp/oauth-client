@@ -17,8 +17,8 @@ Inbound TLS is handled by the Kubernetes ingress.
 ## Build
 	cd app
 	docker load <$(nix-build)
-	docker tag sulliedsecurity/oauthclient:testing change-me.registry.example.com/sulliedsecurity/oauthclient:testing
-	docker push change-me.registry.example.com/sulliedsecurity/oauthclient:testing
+	docker tag sulliedsecurity/oauthclient:testing CHANGEME.registry.example.com/sulliedsecurity/oauthclient:testing
+	docker push CHANGEME.registry.example.com/sulliedsecurity/oauthclient:testing
 
 ## Configure
 1. Change the `.host` property in `destination.vcl` to the domain name of the API server.
@@ -27,3 +27,5 @@ Inbound TLS is handled by the Kubernetes ingress.
 4. In the `kustomization.yaml` file change the `allow-origin` value of the `cors` configuration to the origin of the client application.
 5. In the `kustomization.yaml` file change the `access-token` value of the `client-authorization` configuration to an OAuth client access token.
 6. Change the replacement registry values in `set_registry.yaml` for the Varnish and HAProxy images.
+
+Check with `grep -r CHANGEME .`.

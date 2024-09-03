@@ -1,6 +1,6 @@
 - op: replace
   path: /spec/template/spec/containers/0/image
-  value: change-me.registry.example.com/change-me/varnish:7.5-alpine
+  value: CHANGEME.registry.example.com/CHANGEME/varnish:7.5-alpine
 - op: replace
   path: /spec/template/spec/containers/1/image
-  value: change-me.registry.example.com/change-me/haproxy:3.0-alpine
+  value: CHANGEME.registry.example.com/CHANGEME/haproxy:3.0-alpine

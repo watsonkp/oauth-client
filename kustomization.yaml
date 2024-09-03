@@ -20,10 +20,10 @@ configMapGenerator:
   - haproxy.cfg
 - name: proxy-destination
   literals:
-  - for-host=change-me.proxy-host.example.com
+  - for-host=CHANGEME.proxy-host.example.com
 - name: cors
   literals:
-  - allow-origin=https://change-me.api-client.example.com
+  - allow-origin=https://CHANGEME.api-client.example.com
 secretGenerator:
 - name: client-authorization
   literals:
