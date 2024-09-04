@@ -18,9 +18,6 @@ configMapGenerator:
 - name: haproxy
   files:
   - haproxy/haproxy.cfg
-- name: proxy-destination
-  literals:
-  - for-host=CHANGEME.proxy-host.example.com
 - name: client-side
   files:
   - static/index.html

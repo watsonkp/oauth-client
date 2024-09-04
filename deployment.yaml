@@ -35,11 +35,6 @@ spec:
           env:
             - name: 'VARNISH_HTTP_PORT'
               value: '6081'
-            - name: 'PROXY_FOR_HOST'
-              valueFrom:
-                configMapKeyRef:
-                  name: proxy-destination
-                  key: for-host
             - name: 'AUTHORIZATION'
               valueFrom:
                 secretKeyRef:
