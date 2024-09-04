@@ -21,18 +21,11 @@ spec:
           env:
           - name: HTTP_PORT
             value: "8081"
-          - name: CLIENT_ID
-            value: "CHANGEME"
-          - name: CLIENT_SECRET
-            value: "CHANGEME"
-          - name: AUTHORIZATION_ENDPOINT
-            value: "https://CHANGEME.example.com/"
-          - name: TOKEN_ENDPOINT
-            value: "https://CHANGEME.example.com/"
-          - name: SCOPE
-            value: "CHANGEME"
-          - name: REDIRECT_URI
-            value: "https://CHANGEME.example.com/authorized"
+          envFrom:
+          - secretRef:
+              name: api-registration
+          - configMapRef:
+              name: api-registration
           ports:
             - containerPort: 8081
               name: client-http
