@@ -14,7 +14,7 @@ The Varnish cache injects the OAuth client access token when a user access token
 
 Inbound TLS is handled by the Kubernetes ingress.
 
-## Build
+## Build server container
 	cd app
 	docker load <$(nix-build)
 	docker tag sulliedsecurity/oauthclient:testing CHANGEME.registry.example.com/sulliedsecurity/oauthclient:testing
