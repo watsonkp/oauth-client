@@ -5,7 +5,7 @@ resources:
 configMapGenerator:
 - name: varnish-default
   files:
-  - varbish/default.vcl
+  - varnish/default.vcl
 - name: varnish-destination
   files:
   - varnish/destination.vcl
