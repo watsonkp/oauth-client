@@ -29,4 +29,4 @@ Inbound TLS is handled by the Kubernetes ingress.
 Check with `grep -r CHANGEME .`.
 
 ## Inspiration
-James Kettle's research into web cache vulnerabilities motivated me to gain practical experience with web cache's and Varnish.
+James Kettle's research into web cache vulnerabilities motivated me to gain practical experience with web caches and Varnish.
