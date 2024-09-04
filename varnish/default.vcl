@@ -28,7 +28,7 @@ sub vcl_recv {
 
 sub vcl_miss {
 	# Use the client access token if there is no user access token.
-	if (!req.http.Authorization) {
+	if ((req.backend_hint == destination) && (!req.http.Authorization)) {
 		set req.http.Authorization = std.getenv("AUTHORIZATION");
 	}
 }
