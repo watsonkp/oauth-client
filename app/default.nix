@@ -5,7 +5,10 @@ let
                 pkgs.dockerTools.buildImage {
                         name = "sulliedsecurity/oauth-client";
                         tag = "testing";
-                        copyToRoot = [ server ];
+                        copyToRoot = [
+				server
+				pkgs.dockerTools.caCertificates
+			];
                         config = {
                                 Cmd = [ "/bin/oauthclient" ];
                                 Volumes = {

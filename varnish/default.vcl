@@ -33,5 +33,11 @@ sub vcl_miss {
 	}
 }
 
+sub vcl_backend_response {
+	if (bereq.url == "/") {
+		set beresp.do_esi = true;
+	}
+}
+
 # https://github.com/varnish/toolbox/blob/main/vcls/verbose_builtin/verbose_builtin.vcl
 include "verbose_builtin.vcl";
