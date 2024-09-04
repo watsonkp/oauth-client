@@ -24,6 +24,11 @@ configMapGenerator:
 - name: cors
   literals:
   - allow-origin=https://CHANGEME.api-client.example.com
+- name: client-side
+  files:
+  - index.html
+  - style.css
+  - app.js
 secretGenerator:
 - name: client-authorization
   literals:

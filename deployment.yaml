@@ -15,6 +15,20 @@ spec:
         app: oauth-client
     spec:
       containers:
+        - name: oauth-client
+          image: registry.svc.cluster.local/sulliedsecurity/oauth-client:testing
+          imagePullPolicy: Always
+          env:
+          - name: HTTP_PORT
+            value: "8081"
+          ports:
+            - containerPort: 8081
+              name: client-http
+              protocol: TCP
+          volumeMounts:
+          - name: client-side
+            mountPath: "/static"
+            readOnly: true
         - name: varnish
           image: registry.svc.cluster.local/_/varnish:7.5-alpine
           imagePullPolicy: IfNotPresent
@@ -87,3 +101,6 @@ spec:
                 items:
                 - key: "haproxy.cfg"
                   path: "haproxy.cfg"
+        - name: client-side
+          configMap:
+            name: client-side

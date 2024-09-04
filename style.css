@@ -1,0 +1,8 @@
+body {
+	color: darkgray;
+	background-color: black;
+}
+
+li::marker {
+        color: aquamarine;
+}

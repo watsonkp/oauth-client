@@ -5,7 +5,10 @@ include "hit-miss.vcl";
 
 import std;
 
-backend default none;
+backend default {
+	.host = "127.0.0.1";
+	.port = "8081";
+}
 
 backend sslon {
 	.host = "127.0.0.1";
@@ -15,7 +18,8 @@ backend sslon {
 include "destination.vcl";
 
 sub vcl_recv {
-	if (req.http.host == std.getenv("PROXY_FOR_HOST")) {
+	if (req.url ~ "^/api/") {
+		set req.url = regsub(req.url, "^/api/", "/");
 		set req.backend_hint = destination;
 	} else {
 		set req.backend_hint = default;
