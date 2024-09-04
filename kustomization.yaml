@@ -21,9 +21,6 @@ configMapGenerator:
 - name: proxy-destination
   literals:
   - for-host=CHANGEME.proxy-host.example.com
-- name: cors
-  literals:
-  - allow-origin=https://CHANGEME.api-client.example.com
 - name: client-side
   files:
   - static/index.html

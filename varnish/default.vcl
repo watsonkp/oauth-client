@@ -33,9 +33,5 @@ sub vcl_miss {
 	}
 }
 
-sub vcl_deliver {
-	set resp.http.Access-Control-Allow-Origin = std.getenv("ALLOW_ORIGIN");
-}
-
 # https://github.com/varnish/toolbox/blob/main/vcls/verbose_builtin/verbose_builtin.vcl
 include "verbose_builtin.vcl";

@@ -45,11 +45,6 @@ spec:
                 secretKeyRef:
                   name: client-authorization
                   key: access-token
-            - name: 'ALLOW_ORIGIN'
-              valueFrom:
-                configMapKeyRef:
-                  name: cors
-                  key: allow-origin
           ports:
             - containerPort: 6081
               name: varnish-http
