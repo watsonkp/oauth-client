@@ -27,3 +27,6 @@ Inbound TLS is handled by the Kubernetes ingress.
 5. Change the replacement registry values in `set_registry.yaml` for the Varnish and HAProxy images.
 
 Check with `grep -r CHANGEME .`.
+
+## Inspiration
+James Kettle's research into web cache vulnerabilities motivated me to gain practical experience with web cache's and Varnish.
