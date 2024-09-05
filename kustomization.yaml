@@ -23,7 +23,17 @@ configMapGenerator:
   - static/index.html
   - static/style.css
   - static/app.js
+- name: api-registration
+  literals:
+  - AUTHORIZATION_ENDPOINT=CHANGEME.api-server.example.com
+  - TOKEN_ENDPOINT=CHANGEME.api-server.example.com
+  - SCOPE=CHANGEME
+  - REDIRECT_URI=CHANGEME.application-server.example.com/authorized
 secretGenerator:
+- name: api-registration
+  literals:
+  - CLIENT_ID=CHANGEME
+  - CLIENT_SECRET=CHANGEME
 - name: client-authorization
   literals:
   - access-token=Bearer CHANGEME

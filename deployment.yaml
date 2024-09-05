@@ -21,6 +21,11 @@ spec:
           env:
           - name: HTTP_PORT
             value: "8081"
+          envFrom:
+          - secretRef:
+              name: api-registration
+          - configMapRef:
+              name: api-registration
           ports:
             - containerPort: 8081
               name: client-http
