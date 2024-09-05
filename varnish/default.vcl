@@ -18,7 +18,10 @@ backend sslon {
 include "destination.vcl";
 
 sub vcl_recv {
-	if (req.url ~ "^/api/") {
+	# Never cache state tokens (CSRF protection)
+	if (req.url == "/state") {
+		return(pass);
+	} elif (req.url ~ "^/api/") {
 		set req.url = regsub(req.url, "^/api/", "/");
 		set req.backend_hint = destination;
 	} else {
