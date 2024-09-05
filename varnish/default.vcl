@@ -37,7 +37,7 @@ sub vcl_miss {
 }
 
 sub vcl_backend_response {
-	if (bereq.url == "/") {
+	if ((bereq.url == "/") || (bereq.url == "/index.html") || (bereq.url == "/authorized")) {
 		set beresp.do_esi = true;
 	}
 }
