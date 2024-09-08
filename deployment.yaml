@@ -40,11 +40,9 @@ spec:
           env:
             - name: 'VARNISH_HTTP_PORT'
               value: '6081'
-            - name: 'AUTHORIZATION'
-              valueFrom:
-                secretKeyRef:
-                  name: client-authorization
-                  key: access-token
+          envFrom:
+          - secretRef:
+              name: client-access-token
           ports:
             - containerPort: 6081
               name: varnish-http

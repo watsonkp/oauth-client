@@ -34,9 +34,9 @@ secretGenerator:
   literals:
   - CLIENT_ID=CHANGEME
   - CLIENT_SECRET=CHANGEME
-- name: client-authorization
+- name: client-access-token
   literals:
-  - access-token=Bearer CHANGEME
+  - ACCESS_TOKEN=Bearer
 patches:
 - target:
     kind: Deployment
