@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: oauth-maintainer
+spec:
+  schedule: "15 */6 * * *"
+  successfulJobsHistoryLimit: 4
+  failedJobsHistoryLimit: 4
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: oauth-client
+          restartPolicy: Never
+          containers:
+            - name: agent
+              image: registry.convex.watsonkp.com/sulliedsecurity/oauth-maintainer:testing
+              imagePullPolicy: Always
+              envFrom:
+              - secretRef:
+                  name: api-registration
+              - configMapRef:
+                  name: api-registration
