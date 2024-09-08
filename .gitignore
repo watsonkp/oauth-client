@@ -1,2 +1,6 @@
+*.swp
 app/result
 app/server/result
+maintainer/result
+maintainer/agent/result
+maintainer/agent/vendor
