@@ -111,8 +111,13 @@ func main() {
 	}
 	log.Printf("Created secret %v\n", secretResource.ObjectMeta.Name)
 
+	// Configure the deployment name to be updated from the environment.
+	deploymentName, ok := os.LookupEnv("DEPLOYMENT_NAME")
+	if !ok {
+		log.Fatalln("ERROR: Missing required DEPLOYMENT_NAME environment variable.")
+	}
 	// Get the deployment resource.
-	deployment, err := clientSet.AppsV1().Deployments("default").Get(context.TODO(), "varnish", metav1.GetOptions{})
+	deployment, err := clientSet.AppsV1().Deployments("default").Get(context.TODO(), deploymentName, metav1.GetOptions{})
 	if err != nil {
 		log.Fatalf("ERROR: While getting deployment.\n%v\n", err)
 	}

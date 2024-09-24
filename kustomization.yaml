@@ -30,6 +30,7 @@ configMapGenerator:
   - TOKEN_ENDPOINT=CHANGEME.api-server.example.com
   - SCOPE=CHANGEME
   - REDIRECT_URI=CHANGEME.application-server.example.com/authorized
+  - DEPLOYMENT_NAME=varnish
 secretGenerator:
 - name: api-registration
   literals:
