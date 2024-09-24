@@ -117,7 +117,7 @@ func main() {
 	if err != nil {
 		// If the secret is unchanged the name will be the same and will produce an AlreadyExists error.
 		if apierrors.IsAlreadyExists(err) {
-			log.Printf("Secret %v already exists.", secretResource.ObjectMeta.Name)
+			log.Printf("Secret %v already exists.", secret.ObjectMeta.Name)
 			return
 		}
 		log.Fatalf("ERROR: While creating a secret.\n%v\n", err)
