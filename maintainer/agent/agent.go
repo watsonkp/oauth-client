@@ -14,8 +14,10 @@ import (
 
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
+	"k8s.io/kubectl/pkg/util/hash"
 )
 
 // Client authentication with the authorization that returns an authorization token.
@@ -100,13 +102,24 @@ func main() {
 	// Create secret
 	secret := corev1.Secret{
 		ObjectMeta: metav1.ObjectMeta{
-			GenerateName: "client-access-token-",
+			Name: "client-access-token",
 			Namespace: "default",
 		},
 		StringData: map[string]string{ "ACCESS_TOKEN": accessToken },
 	}
+	// Name the secret with a suffix that is the hash of its contents as Kustomize does.
+	nameSuffix, err := hash.SecretHash(&secret)
+	if err != nil {
+		log.Fatalf("ERROR: While hashing secret.\n%v\n", err)
+	}
+	secret.ObjectMeta.SetName(fmt.Sprintf("client-access-token-%v", nameSuffix))
 	secretResource, err := clientSet.CoreV1().Secrets("default").Create(context.TODO(), &secret, metav1.CreateOptions{})
 	if err != nil {
+		// If the secret is unchanged the name will be the same and will produce an AlreadyExists error.
+		if apierrors.IsAlreadyExists(err) {
+			log.Printf("Secret %v already exists.", secretResource.ObjectMeta.Name)
+			return
+		}
 		log.Fatalf("ERROR: While creating a secret.\n%v\n", err)
 	}
 	log.Printf("Created secret %v\n", secretResource.ObjectMeta.Name)
